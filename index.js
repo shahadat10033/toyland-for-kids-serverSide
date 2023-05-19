@@ -25,9 +25,16 @@ async function run() {
 
     const dbCollection = client.db("ToysDB").collection("toys");
 
+    app.get("/toys", async (req, res) => {
+      const limit = 10;
+      const result = await dbCollection.find().limit(limit).toArray();
+
+      // Send the limited data as a response
+      res.json(result);
+    });
+
     app.post("/toys", async (req, res) => {
       const newToy = req.body;
-      console.log(newToy);
       const result = await dbCollection.insertOne(newToy);
       res.send(result);
     });
@@ -37,7 +44,6 @@ async function run() {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
   } finally {
-    // Ensures that the client will close when you finish/error
     // await client.close();
   }
 }
