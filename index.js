@@ -32,13 +32,19 @@ async function run() {
       res.send(result);
     });
     app.get("/myToys", async (req, res) => {
-      console.log(req.query.email);
+      console.log(req.query.sellerEmail);
       let query = {};
-      if (req.query.email) {
-        query = { email: req.query.email };
+      if (req.query?.sellerEmail) {
+        query = { sellerEmail: req.query.sellerEmail };
       }
       const result = await dbCollection.find(query).toArray();
 
+      res.send(result);
+    });
+
+    app.post("/toys", async (req, res) => {
+      const newToy = req.body;
+      const result = await dbCollection.insertOne(newToy);
       res.send(result);
     });
 
@@ -49,9 +55,10 @@ async function run() {
       res.send(result);
     });
 
-    app.post("/toys", async (req, res) => {
-      const newToy = req.body;
-      const result = await dbCollection.insertOne(newToy);
+    app.delete("/toys/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await dbCollection.deleteOne(query);
       res.send(result);
     });
 
