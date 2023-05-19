@@ -61,6 +61,22 @@ async function run() {
       const result = await dbCollection.deleteOne(query);
       res.send(result);
     });
+    app.put("/toys/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const updatedToy = req.body;
+
+      const updateDoc = {
+        $set: {
+          price: updatedToy.price,
+          quantity: updatedToy.quantity,
+          description: updatedToy.description,
+        },
+      };
+
+      const result = await dbCollection.updateOne(query, updateDoc);
+      res.send(result);
+    });
 
     await client.db("admin").command({ ping: 1 });
     console.log(
