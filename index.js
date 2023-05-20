@@ -54,6 +54,16 @@ async function run() {
       const result = await dbCollection.findOne(query);
       res.send(result);
     });
+    app.get("/subCategory", async (req, res) => {
+      // const subCategory = req.params.subCategory;
+      console.log(req.query.subCategory);
+      let query = {};
+      if (req.query?.subCategory) {
+        query = { subCategory: req.query.subCategory };
+      }
+      const result = await dbCollection.find(query).toArray();
+      res.send(result);
+    });
 
     app.delete("/toys/:id", async (req, res) => {
       const id = req.params.id;
