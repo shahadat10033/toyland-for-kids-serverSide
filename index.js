@@ -41,6 +41,36 @@ async function run() {
 
       res.send(result);
     });
+    app.get("/descendingToys", async (req, res) => {
+      console.log(req.query.sellerEmail);
+      let query = {};
+      if (req.query?.sellerEmail) {
+        query = { sellerEmail: req.query.sellerEmail };
+      }
+
+      const options = {
+        sort: { price: -1 },
+      };
+
+      const result = await dbCollection.find(query, options).toArray();
+
+      res.send(result);
+    });
+    app.get("/ascendingToys", async (req, res) => {
+      console.log(req.query.sellerEmail);
+      let query = {};
+      if (req.query?.sellerEmail) {
+        query = { sellerEmail: req.query.sellerEmail };
+      }
+
+      const options = {
+        sort: { price: 1 },
+      };
+
+      const result = await dbCollection.find(query, options).toArray();
+
+      res.send(result);
+    });
 
     app.post("/toys", async (req, res) => {
       const newToy = req.body;
