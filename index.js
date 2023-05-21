@@ -10,7 +10,6 @@ app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ddxd88y.mongodb.net/?retryWrites=true&w=majority`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -32,7 +31,6 @@ async function run() {
       res.send(result);
     });
     app.get("/myToys", async (req, res) => {
-      console.log(req.query.sellerEmail);
       let query = {};
       if (req.query?.sellerEmail) {
         query = { sellerEmail: req.query.sellerEmail };
@@ -42,7 +40,6 @@ async function run() {
       res.send(result);
     });
     app.get("/descendingToys", async (req, res) => {
-      console.log(req.query.sellerEmail);
       let query = {};
       if (req.query?.sellerEmail) {
         query = { sellerEmail: req.query.sellerEmail };
@@ -57,7 +54,6 @@ async function run() {
       res.send(result);
     });
     app.get("/ascendingToys", async (req, res) => {
-      console.log(req.query.sellerEmail);
       let query = {};
       if (req.query?.sellerEmail) {
         query = { sellerEmail: req.query.sellerEmail };
@@ -79,8 +75,6 @@ async function run() {
     });
 
     app.get("/toyName", async (req, res) => {
-      // const subCategory = req.params.subCategory;
-      console.log(req.query.toyName);
       let query = {};
       if (req.query?.toyName) {
         query = { toyName: req.query.toyName };
@@ -98,8 +92,6 @@ async function run() {
       res.send(result);
     });
     app.get("/subCategory", async (req, res) => {
-      // const subCategory = req.params.subCategory;
-      console.log(req.query.subCategory);
       let query = {};
       if (req.query?.subCategory) {
         query = { subCategory: req.query.subCategory };
