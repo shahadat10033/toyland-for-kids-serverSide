@@ -16,12 +16,20 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
+    useUnifiedTopology: true,
+    maxPoolSize: 10,
   },
+  useNewUrlParser: true,
 });
 
 async function run() {
   try {
-    await client.connect();
+    client.connect((err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
 
     const dbCollection = client.db("ToysDB").collection("toys");
 
