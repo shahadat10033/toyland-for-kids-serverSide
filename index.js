@@ -8,6 +8,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// user CredentialInfo hide by env file
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ddxd88y.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
@@ -44,11 +45,9 @@ async function run() {
       if (req.query?.sellerEmail) {
         query = { sellerEmail: req.query.sellerEmail };
       }
-
       const options = {
         sort: { price: -1 },
       };
-
       const result = await dbCollection.find(query, options).toArray();
 
       res.send(result);
@@ -65,12 +64,6 @@ async function run() {
 
       const result = await dbCollection.find(query, options).toArray();
 
-      res.send(result);
-    });
-
-    app.post("/toys", async (req, res) => {
-      const newToy = req.body;
-      const result = await dbCollection.insertOne(newToy);
       res.send(result);
     });
 
@@ -97,6 +90,12 @@ async function run() {
         query = { subCategory: req.query.subCategory };
       }
       const result = await dbCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    app.post("/toys", async (req, res) => {
+      const newToy = req.body;
+      const result = await dbCollection.insertOne(newToy);
       res.send(result);
     });
 
